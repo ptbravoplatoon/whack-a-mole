@@ -34,6 +34,7 @@ class App extends Component {
   }
 
   // This is called when the anonymous callback function is called by the Mole child component
+  // It increments the points if the img, which is conditionally rendered, is clicked
   onMoleWhacked(event) {
     this.setState({
       points: this.state.points + 1
