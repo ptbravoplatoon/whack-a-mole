@@ -7,16 +7,24 @@ class App extends Component {
     dens: this.getDensState(),
     points: 0,
   }
+
   componentDidMount() {
-    this.startGame()
+    this.drawGame()
   }
-  startGame() {
+
+  // This gets called in the componentDidMount lifecycle method
+  // Whenever the interval function sets the state
+  // The component is re-rendered and start game gets called again
+  drawGame() {
     setInterval(() => {
       this.setState({
         dens: this.getDensState()
       })
     }, 1500)
   }
+
+  // This creates a 9 element array
+  // and populates it with isMoleVisible boolean based on Math.random()
   getDensState() {
     return new Array(9).fill({}).map(() => {
       return { 
@@ -24,7 +32,10 @@ class App extends Component {
       }
     })
   }
-  onMoleWhacked() {
+
+  // This is called when the anonymous callback function is called by the Mole child component
+  // It increments the points if the img, which is conditionally rendered, is clicked
+  onMoleWhacked(event) {
     this.setState({
       points: this.state.points + 1
     })
@@ -32,7 +43,8 @@ class App extends Component {
   render() {
     const dens = this.state.dens.map((den, index) => {
       return (
-        <Mole key={`mole-${index}`} />
+        // <Mole key={`mole-${index}`} isMoleVisible={den.isMoleVisible} handleClick={this.onMoleWhacked.bind(this)} />
+        <Mole key={`mole-${index}`} isMoleVisible={den.isMoleVisible} handleClick={(e) => this.onMoleWhacked(e)} />
       )
     })
     return (
