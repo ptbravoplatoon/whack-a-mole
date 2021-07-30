@@ -10,6 +10,7 @@ class App extends Component {
   componentDidMount() {
     this.startGame()
   }
+  // SetInterval makes it so that getDensState is called every 1500 milliseconds or every 1.5 seconds
   startGame() {
     setInterval(() => {
       this.setState({
@@ -17,6 +18,7 @@ class App extends Component {
       })
     }, 1500)
   }
+  // Creates an array with 9 entries that are randomly assigned either true or false. If true the mole appears.
   getDensState() {
     return new Array(9).fill({}).map(() => {
       return { 
@@ -24,7 +26,8 @@ class App extends Component {
       }
     })
   }
-  onMoleWhacked() {
+  // When a mole is clicked on this function is called and it increments the state points by one.
+  onMoleWhacked = () => {
     this.setState({
       points: this.state.points + 1
     })
@@ -32,7 +35,7 @@ class App extends Component {
   render() {
     const dens = this.state.dens.map((den, index) => {
       return (
-        <Mole key={`mole-${index}`} />
+        <Mole key={`mole-${index}`} visible={this.state.dens[index].isMoleVisible} onMoleWhacked={this.onMoleWhacked} />
       )
     })
     return (
